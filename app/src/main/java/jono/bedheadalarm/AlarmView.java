@@ -42,6 +42,22 @@ public class AlarmView extends AppCompatActivity {
         final CustomAdapter Alarmsfetch = new CustomAdapter(this, R.layout.alarmlist);
         AlarmList.setAdapter(Alarmsfetch);
 
+        AlarmList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                int id_To_Search = arg2 + 1;
+
+                Bundle dataBundle = new Bundle();
+                dataBundle.putInt("id", id_To_Search);
+
+                Intent intent = new Intent(getApplicationContext(), AddAlarm.class);
+
+                intent.putExtras(dataBundle);
+                startActivity(intent);
+            }
+        });
+
         // Populate the list, through the adapter
         for (final Alarm entry : mydb.getAllAlarms()) {
             Alarmsfetch.add(entry);
