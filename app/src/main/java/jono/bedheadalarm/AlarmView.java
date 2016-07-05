@@ -46,7 +46,7 @@ public class AlarmView extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 // TODO Auto-generated method stub
-                int id_To_Search = arg2 + 1;
+                int id_To_Search = arg2+3;
 
                 Bundle dataBundle = new Bundle();
                 dataBundle.putInt("id", id_To_Search);

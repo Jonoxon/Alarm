@@ -2,7 +2,9 @@ package jono.bedheadalarm;
 
 /**
  * Created by Jono on 29/05/2016.
+ * Structure of database copied + edited from http://www.tutorialspoint.com/android/android_sqlite_database.htm
  */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
