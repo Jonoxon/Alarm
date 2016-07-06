@@ -10,11 +10,16 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.UUID;
+
 
 import java.util.Calendar;
 
@@ -120,6 +125,65 @@ public class AddAlarm extends AppCompatActivity {
         return true;
     }
 
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_sun: if (checked){
+                }
+                else {
+                }
+                break;
+            case R.id.checkbox_mon: if (checked){
+                }
+                else {
+                }
+                break;
+            case R.id.checkbox_tue: if (checked){
+                }
+                else {
+                }
+                break;
+            case R.id.checkbox_wed: if (checked){
+                }
+                else {
+                }
+                break;
+            case R.id.checkbox_thu: if (checked){
+                }
+                else {
+                }
+                break;
+            case R.id.checkbox_fri: if (checked){
+                }
+                else {
+                }
+                break;
+            case R.id.checkbox_sat: if (checked){
+                }
+                else {
+                }
+                break;
+        }
+    }
+
+    public UUID generateUUID() {
+        return UUID.randomUUID();
+    }
+
+    public void makeAlarmIntents(ArrayList<Integer> repeatdays) {
+        for (Integer item : repeatdays) {
+            //do something with the list
+            if (item == 1) {
+                // non static method?????
+                Integer specifiedDay = repeatdays.indexOf(item);
+                AlarmTrigger.TimeCreate(timePicker.getCurrentHour(),timePicker.getCurrentMinute(), specifiedDay );
+            }
+        }
+    }
+
     public void delete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.deleteContact)
@@ -143,6 +207,8 @@ public class AddAlarm extends AppCompatActivity {
 
     public void run(View view)
     {
+        // not sure if putting here is good
+        makeAlarmIntents();
         Bundle extras = getIntent().getExtras();
         if(extras !=null)
         {

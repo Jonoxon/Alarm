@@ -113,6 +113,55 @@
                     android:ems="10"
                     android:inputType="textUri" />
 
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/daysofweek"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox android:id="@+id/checkbox_sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sun"
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mon"
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_tue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tue"
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wed"
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_thu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thu"
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fri"
+                    android:onClick="onCheckboxClicked"/>
+
+                <CheckBox android:id="@+id/checkbox_sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sat"
+                    android:onClick="onCheckboxClicked"/>
+
                 <Button
                     android:id="@+id/Save"
                     android:layout_width="wrap_content"
