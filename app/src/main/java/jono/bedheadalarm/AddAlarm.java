@@ -20,7 +20,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.UUID;
 
-
 import java.util.Calendar;
 
 public class AddAlarm extends AppCompatActivity {
@@ -30,6 +29,7 @@ public class AddAlarm extends AppCompatActivity {
     TextView ringtone;
     Switch vibrate;
     Integer vib;
+    Integer daysofweek;
     TimePicker timePicker;
     Calendar calendar;
     int id_To_Update = 0;
@@ -132,39 +132,39 @@ public class AddAlarm extends AppCompatActivity {
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.checkbox_sun: if (checked){
-                }
+                daysofweek = daysofweek|Days.SUNDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.SUNDAY;}
                 break;
             case R.id.checkbox_mon: if (checked){
-                }
+                daysofweek = daysofweek|Days.MONDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.MONDAY;}
                 break;
             case R.id.checkbox_tue: if (checked){
-                }
+                daysofweek = daysofweek|Days.TUESDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.TUESDAY;}
                 break;
             case R.id.checkbox_wed: if (checked){
-                }
+                daysofweek = daysofweek|Days.WEDNESDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.WEDNESDAY;}
                 break;
             case R.id.checkbox_thu: if (checked){
-                }
+                daysofweek = daysofweek|Days.THURSDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.THURSDAY;}
                 break;
             case R.id.checkbox_fri: if (checked){
-                }
+                daysofweek = daysofweek|Days.FRIDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.FRIDAY;}
                 break;
             case R.id.checkbox_sat: if (checked){
-                }
+                daysofweek = daysofweek|Days.SATURDAY; }
                 else {
-                }
+                daysofweek = daysofweek^Days.SATURDAY;}
                 break;
         }
     }
@@ -179,7 +179,7 @@ public class AddAlarm extends AppCompatActivity {
             if (item == 1) {
                 // non static method?????
                 Integer specifiedDay = repeatdays.indexOf(item);
-                AlarmTrigger.TimeCreate(timePicker.getCurrentHour(),timePicker.getCurrentMinute(), specifiedDay );
+                //AlarmTrigger.TimeCreate(timePicker.getCurrentHour(),timePicker.getCurrentMinute(), specifiedDay );
             }
         }
     }
@@ -208,13 +208,13 @@ public class AddAlarm extends AppCompatActivity {
     public void run(View view)
     {
         // not sure if putting here is good
-        makeAlarmIntents();
+       // makeAlarmIntents();
         Bundle extras = getIntent().getExtras();
         if(extras !=null)
         {
             int Value = extras.getInt("id");
             if(Value>0){
-                if(mydb.updateContact(id_To_Update,nam.getText().toString(),vib,ringtone.getText().toString(),timePicker.getCurrentHour(),timePicker.getCurrentMinute())){
+                if(mydb.updateContact(id_To_Update,nam.getText().toString(),vib,ringtone.getText().toString(),timePicker.getCurrentHour(),timePicker.getCurrentMinute(),daysofweek)){
                     Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),AlarmView.class);
                     startActivity(intent);
@@ -224,7 +224,7 @@ public class AddAlarm extends AppCompatActivity {
                 }
             }
             else{
-                if(mydb.insertContact(nam.getText().toString(),vib,ringtone.getText().toString(),timePicker.getCurrentHour(),timePicker.getCurrentMinute())){
+                if(mydb.insertContact(nam.getText().toString(),vib,ringtone.getText().toString(),timePicker.getCurrentHour(),timePicker.getCurrentMinute(), daysofweek)){
                     Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                 }
 

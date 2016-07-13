@@ -32,7 +32,7 @@ public final class CustomAdapter extends ArrayAdapter<Alarm> {
         final Alarm entry = getItem(position);
 
         // Setting the title view is straightforward
-        viewHolder.Name.setText(entry.getName());
+        viewHolder.Name.setText(entry.getName()+' '+entry.getDays());
 
         // Setting the subTitle view requires a tiny bit of formatting
         final String formattedTime = String.format("%s : %s",

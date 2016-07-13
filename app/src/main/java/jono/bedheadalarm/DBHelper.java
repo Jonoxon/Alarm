@@ -26,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ALARMSDATABASE_COLUMN_RINGTONE = "ring"; // Uri Ringtone
     public static final String ALARMSDATABASE_COLUMN_HOURS = "hours";
     public static final String ALARMSDATABASE_COLUMN_MINUTES = "minutes";
+    public static final String ALARMSDATABASE_COLUMN_DAYS = "days";
 
     private HashMap hp;
 
@@ -39,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table alarmsdatabase " +
-                        "(id Integer primary key, name text,vib int default 0, ring text, hours int, minutes int)"
+                        "(id Integer primary key, name text,vib int default 0, ring text, hours int, minutes int, days int)"
         );
     }
 
@@ -50,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertContact  (String name, Integer vib, String ring, Integer hours, Integer minutes)
+    public boolean insertContact  (String name, Integer vib, String ring, Integer hours, Integer minutes, Integer days)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -59,7 +60,9 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("ring", ring);
         contentValues.put("hours", hours);
         contentValues.put("minutes", minutes);
-        db.insert("alarmsdatabase", null, contentValues);
+        contentValues.put("minutes", minutes);
+        contentValues.put("days", days);
+        db.insert("alarmsdatabase",null , contentValues);
         return true;
     }
 
@@ -76,7 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateContact (Integer id, String name, Integer vib, String ring, Integer hours, Integer minutes)
+    public boolean updateContact (Integer id, String name, Integer vib, String ring, Integer hours, Integer minutes, Integer days)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -85,6 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("ring", ring);
         contentValues.put("hours", hours);
         contentValues.put("minutes", minutes);
+        contentValues.put("days", days);
         db.update("alarmsdatabase", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
         return true;
     }
@@ -113,7 +117,8 @@ public class DBHelper extends SQLiteOpenHelper {
                             res.getString(res.getColumnIndex(ALARMSDATABASE_COLUMN_NAME)),
                             res.getInt(res.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_HOURS)),
                             res.getInt(res.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_MINUTES)),
-                            res.getInt(res.getColumnIndex(ALARMSDATABASE_COLUMN_VIBRATE))
+                            res.getInt(res.getColumnIndex(ALARMSDATABASE_COLUMN_VIBRATE)),
+                            res.getInt(res.getColumnIndex(ALARMSDATABASE_COLUMN_DAYS))
                     )
             );
             res.moveToNext();

@@ -36,7 +36,7 @@ public class AlarmView extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mydb = new DBHelper(this);
-
+        final List<Alarm> Alarms = mydb.getAllAlarms();
         // Setup the list view
         final ListView AlarmList = (ListView) findViewById(R.id.listViewAlarms);
         final CustomAdapter Alarmsfetch = new CustomAdapter(this, R.layout.alarmlist);
@@ -44,9 +44,9 @@ public class AlarmView extends AppCompatActivity {
 
         AlarmList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 // TODO Auto-generated method stub
-                int id_To_Search = arg2+3;
+                int id_To_Search = Integer.parseInt(Alarms.get(position).getId());
 
                 Bundle dataBundle = new Bundle();
                 dataBundle.putInt("id", id_To_Search);
@@ -59,7 +59,7 @@ public class AlarmView extends AppCompatActivity {
         });
 
         // Populate the list, through the adapter
-        for (final Alarm entry : mydb.getAllAlarms()) {
+        for (final Alarm entry : Alarms) {
             Alarmsfetch.add(entry);
         }
     }

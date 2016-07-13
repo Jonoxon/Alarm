@@ -12,13 +12,15 @@ public class Alarm {
     private Integer hours;
     private Integer mins;
     private Integer vib;
+    private Integer days;
 
-    public Alarm(String id, String name, Integer hours, Integer mins, Integer vib) {
+    public Alarm(String id, String name, Integer hours, Integer mins, Integer vib, Integer days) {
         this.id = id;
         this.name = name;
         this.hours = hours;
         this.mins = mins;
         this.vib = vib;
+        this.days = days;
     }
 
 
@@ -43,6 +45,10 @@ public class Alarm {
 
     public Integer getVib() {
         return vib;
+    }
+
+    public Integer getDays() {
+        return days;
     }
 }
 
