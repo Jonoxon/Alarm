@@ -9,4 +9,66 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="jono.bedheadalarm.Home">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="2">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/viewAlarm"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:id="@+id/vAlarm"
+                android:onClick="navigate" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/createAlarm"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:id="@+id/cAlarm"
+                android:onClick="navigate" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="2">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/viewTimetable"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:id="@+id/vtimetable"
+                android:onClick="navigate" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/options"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:id="@+id/options"
+                android:onClick="navigate" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -21,7 +21,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ALARMDATABASE_COLUMN_ID = "id";
     public static final String ALARMDATABASE_COLUMN_NAME = "name";
     public static final String ALARMDATABASE_COLUMN_VIBRATE = "vib";
-    public static final String ALARMDATABASE_COLUMN_RINGTONE = "ring"; // Uri Ringtone
     public static final String ALARMDATABASE_COLUMN_HOURS = "hours";
     public static final String ALARMDATABASE_COLUMN_MINUTES = "minutes";
     public static final String ALARMDATABASE_COLUMN_DAYS = "days";
@@ -38,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table alarmdatabase " +
-                        "(id Integer primary key, name text,vib int default 0, ring text, hours int, minutes int, days int)"
+                        "(id Integer primary key, name text,vib int default 0, hours int, minutes int, days int)"
         );
     }
 
@@ -49,13 +48,12 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertContact  (String name, Integer vib, String ring, Integer hours, Integer minutes, Integer days)
+    public boolean insertContact  (String name, Integer vib, Integer hours, Integer minutes, Integer days)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("vib", vib);
-        contentValues.put("ring", ring);
         contentValues.put("hours", hours);
         contentValues.put("minutes", minutes);
         contentValues.put("minutes", minutes);
@@ -77,13 +75,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateContact (Integer id, String name, Integer vib, String ring, Integer hours, Integer minutes, Integer days)
+    public boolean updateContact (Integer id, String name, Integer vib, Integer hours, Integer minutes, Integer days)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("vib", vib);
-        contentValues.put("ring", ring);
         contentValues.put("hours", hours);
         contentValues.put("minutes", minutes);
         contentValues.put("days", days);

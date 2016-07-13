@@ -24,4 +24,15 @@
     <string name="fri">Friday</string>
     <string name="sat">Saturday</string>
     <string name="title_activity_maps">Map</string>
+    <string name="zoomin">Zoom In</string>
+    <string name="zoomout">Zoom Out</string>
+    <string name="confirm">Confirm Location</string>
+    <string name="search">Search</string>
+    <string name="createAlarm">Create Alarm</string>
+    <string name="viewAlarm">View All Alarms</string>
+    <string name="viewTimetable">View Transit Timetables</string>
+    <string name="options">Options</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="cTimeAlarm">Create Time Alarm</string>
+    <string name="cGPSAlarm">Create GPS Alarm</string>
 </resources>

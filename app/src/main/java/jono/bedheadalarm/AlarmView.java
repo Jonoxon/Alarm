@@ -6,15 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -51,7 +46,7 @@ public class AlarmView extends AppCompatActivity {
                 Bundle dataBundle = new Bundle();
                 dataBundle.putInt("id", id_To_Search);
 
-                Intent intent = new Intent(getApplicationContext(), AddAlarm.class);
+                Intent intent = new Intent(getApplicationContext(), AddTimeAlarm.class);
 
                 intent.putExtras(dataBundle);
                 startActivity(intent);
@@ -77,12 +72,8 @@ public class AlarmView extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.Add_Alarm:
-                Bundle dataBundle = new Bundle();
-                dataBundle.putInt("id", 0);
+                Intent intent = new Intent(getApplicationContext(), CreateAlarm.class);
 
-                Intent intent = new Intent(getApplicationContext(), AddAlarm.class);
-
-                intent.putExtras(dataBundle);
                 startActivity(intent);
                 return true;
 

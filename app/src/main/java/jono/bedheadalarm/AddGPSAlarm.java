@@ -7,14 +7,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,38 +20,25 @@ import java.util.UUID;
 
 import java.util.Calendar;
 
-public class AddAlarm extends AppCompatActivity {
+public class AddGPSAlarm extends AppCompatActivity {
     private DBHelper mydb;
 
     TextView nam;
-    TextView ringtone;
     Switch vibrate;
     Integer vib;
     Integer daysofweek;
-    TimePicker timePicker;
-    Calendar calendar;
     int id_To_Update = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_alarm);
+        setContentView(R.layout.activity_add_timealarm);
         nam = (TextView) findViewById(R.id.editTextName);
         vibrate = (Switch) findViewById(R.id.vibrateToggle);
-        ringtone = (TextView) findViewById(R.id.editTextRingtone);
 
         vibrate.setChecked(false);
 
         mydb = new DBHelper(this);
-
-        timePicker = (TimePicker) findViewById(R.id.timePicker);
-        calendar = Calendar.getInstance();
-
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int min = calendar.get(Calendar.MINUTE);
-
-        timePicker.setCurrentHour(hour);
-        timePicker.setCurrentMinute(min);
 
         Button delete = (Button)findViewById(R.id.DeleteAlarm);
         TextView alarmtitle = (TextView) findViewById(R.id.AlarmTitle);
@@ -66,26 +51,20 @@ public class AddAlarm extends AppCompatActivity {
             if (Value > 0) {
                 //if you are editing an alarm
                 delete.setVisibility(View.VISIBLE);
-                alarmtitle.setText("Edit Alarm");
+                alarmtitle.setText("Edit GPS Alarm");
 
                 Cursor rs = mydb.getData(Value);
                 id_To_Update = Value;
                 rs.moveToFirst();
 
                 String name = rs.getString(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_NAME));
-                String ring = rs.getString(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_RINGTONE));
                 Integer oldvib = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_VIBRATE));
-                Integer oldhour = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_HOURS));
-                Integer oldminute = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_MINUTES));
 
                 if (!rs.isClosed()) {
                     rs.close();
                 }
 
                 nam.setText(name);
-                ringtone.setText(ring);
-                timePicker.setCurrentHour(oldhour);
-                timePicker.setCurrentMinute(oldminute);
 
 
                 if (oldvib == 1) {
@@ -118,7 +97,7 @@ public class AddAlarm extends AppCompatActivity {
         //replaces the default 'Back' button action
         if(keyCode== KeyEvent.KEYCODE_BACK)
         {
-            Intent intent = new Intent(AddAlarm.this, AlarmView.class);
+            Intent intent = new Intent(AddGPSAlarm.this, AlarmView.class);
             finish();
             startActivity(intent);
         }
@@ -133,37 +112,37 @@ public class AddAlarm extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.checkbox_sun: if (checked){
                 daysofweek = daysofweek|Days.SUNDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.SUNDAY;}
                 break;
             case R.id.checkbox_mon: if (checked){
                 daysofweek = daysofweek|Days.MONDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.MONDAY;}
                 break;
             case R.id.checkbox_tue: if (checked){
                 daysofweek = daysofweek|Days.TUESDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.TUESDAY;}
                 break;
             case R.id.checkbox_wed: if (checked){
                 daysofweek = daysofweek|Days.WEDNESDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.WEDNESDAY;}
                 break;
             case R.id.checkbox_thu: if (checked){
                 daysofweek = daysofweek|Days.THURSDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.THURSDAY;}
                 break;
             case R.id.checkbox_fri: if (checked){
                 daysofweek = daysofweek|Days.FRIDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.FRIDAY;}
                 break;
             case R.id.checkbox_sat: if (checked){
                 daysofweek = daysofweek|Days.SATURDAY; }
-                else {
+            else {
                 daysofweek = daysofweek^Days.SATURDAY;}
                 break;
         }
@@ -208,13 +187,13 @@ public class AddAlarm extends AppCompatActivity {
     public void run(View view)
     {
         // not sure if putting here is good
-       // makeAlarmIntents();
+        // makeAlarmIntents();
         Bundle extras = getIntent().getExtras();
         if(extras !=null)
         {
             int Value = extras.getInt("id");
             if(Value>0){
-                if(mydb.updateContact(id_To_Update,nam.getText().toString(),vib,ringtone.getText().toString(),timePicker.getCurrentHour(),timePicker.getCurrentMinute(),daysofweek)){
+                if(mydb.updateContact(id_To_Update,nam.getText().toString(),vib,null,null,daysofweek)){
                     Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),AlarmView.class);
                     startActivity(intent);
@@ -224,7 +203,7 @@ public class AddAlarm extends AppCompatActivity {
                 }
             }
             else{
-                if(mydb.insertContact(nam.getText().toString(),vib,ringtone.getText().toString(),timePicker.getCurrentHour(),timePicker.getCurrentMinute(), daysofweek)){
+                if(mydb.insertContact(nam.getText().toString(),vib,null,null, daysofweek)){
                     Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                 }
 
@@ -237,3 +216,4 @@ public class AddAlarm extends AppCompatActivity {
         }
     }
 }
+
