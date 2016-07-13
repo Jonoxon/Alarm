@@ -72,11 +72,11 @@ public class AddAlarm extends AppCompatActivity {
                 id_To_Update = Value;
                 rs.moveToFirst();
 
-                String name = rs.getString(rs.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_NAME));
-                String ring = rs.getString(rs.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_RINGTONE));
-                Integer oldvib = rs.getInt(rs.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_VIBRATE));
-                Integer oldhour = rs.getInt(rs.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_HOURS));
-                Integer oldminute = rs.getInt(rs.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_MINUTES));
+                String name = rs.getString(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_NAME));
+                String ring = rs.getString(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_RINGTONE));
+                Integer oldvib = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_VIBRATE));
+                Integer oldhour = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_HOURS));
+                Integer oldminute = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_MINUTES));
 
                 if (!rs.isClosed()) {
                     rs.close();

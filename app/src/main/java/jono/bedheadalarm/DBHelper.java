@@ -2,9 +2,7 @@ package jono.bedheadalarm;
 
 /**
  * Created by Jono on 29/05/2016.
- * Structure of database copied + edited from http://www.tutorialspoint.com/android/android_sqlite_database.htm
  */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,15 +16,15 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "alarmsdatabase.db";
-    public static final String ALARMSDATABASE_TABLE_NAME = "Alarms";
-    public static final String ALARMSDATABASE_COLUMN_ID = "id";
-    public static final String ALARMSDATABASE_COLUMN_NAME = "name";
-    public static final String ALARMSDATABASE_COLUMN_VIBRATE = "vib";
-    public static final String ALARMSDATABASE_COLUMN_RINGTONE = "ring"; // Uri Ringtone
-    public static final String ALARMSDATABASE_COLUMN_HOURS = "hours";
-    public static final String ALARMSDATABASE_COLUMN_MINUTES = "minutes";
-    public static final String ALARMSDATABASE_COLUMN_DAYS = "days";
+    public static final String DATABASE_NAME = "alarmdatabase.db";
+    public static final String ALARMDATABASE_TABLE_NAME = "Alarms";
+    public static final String ALARMDATABASE_COLUMN_ID = "id";
+    public static final String ALARMDATABASE_COLUMN_NAME = "name";
+    public static final String ALARMDATABASE_COLUMN_VIBRATE = "vib";
+    public static final String ALARMDATABASE_COLUMN_RINGTONE = "ring"; // Uri Ringtone
+    public static final String ALARMDATABASE_COLUMN_HOURS = "hours";
+    public static final String ALARMDATABASE_COLUMN_MINUTES = "minutes";
+    public static final String ALARMDATABASE_COLUMN_DAYS = "days";
 
     private HashMap hp;
 
@@ -39,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         db.execSQL(
-                "create table alarmsdatabase " +
+                "create table alarmdatabase " +
                         "(id Integer primary key, name text,vib int default 0, ring text, hours int, minutes int, days int)"
         );
     }
@@ -47,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
-        db.execSQL("DROP TABLE IF EXISTS alarmsdatabase");
+        db.execSQL("DROP TABLE IF EXISTS alarmdatabase");
         onCreate(db);
     }
 
@@ -62,20 +60,20 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("minutes", minutes);
         contentValues.put("minutes", minutes);
         contentValues.put("days", days);
-        db.insert("alarmsdatabase",null , contentValues);
+        db.insert("alarmdatabase",null , contentValues);
         return true;
     }
 
 
     public Cursor getData(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from alarmsdatabase where id="+id+"", null );
+        Cursor res =  db.rawQuery( "select * from alarmdatabase where id="+id+"", null );
         return res;
     }
 
     public int numberOfRows(){
         SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, ALARMSDATABASE_TABLE_NAME);
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, ALARMDATABASE_TABLE_NAME);
         return numRows;
     }
 
@@ -89,14 +87,14 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("hours", hours);
         contentValues.put("minutes", minutes);
         contentValues.put("days", days);
-        db.update("alarmsdatabase", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
+        db.update("alarmdatabase", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
         return true;
     }
 
     public Integer deleteContact (Integer id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("alarmsdatabase",
+        return db.delete("alarmdatabase",
                 "id = ? ",
                 new String[] { Integer.toString(id) });
     }
@@ -107,18 +105,18 @@ public class DBHelper extends SQLiteOpenHelper {
         final List<Alarm> alarms = new ArrayList<Alarm>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from alarmsdatabase", null );
+        Cursor res =  db.rawQuery( "select * from alarmdatabase", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
             alarms.add(
                     new Alarm(
-                            res.getString(res.getColumnIndex(ALARMSDATABASE_COLUMN_ID)),
-                            res.getString(res.getColumnIndex(ALARMSDATABASE_COLUMN_NAME)),
-                            res.getInt(res.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_HOURS)),
-                            res.getInt(res.getColumnIndex(DBHelper.ALARMSDATABASE_COLUMN_MINUTES)),
-                            res.getInt(res.getColumnIndex(ALARMSDATABASE_COLUMN_VIBRATE)),
-                            res.getInt(res.getColumnIndex(ALARMSDATABASE_COLUMN_DAYS))
+                            res.getString(res.getColumnIndex(ALARMDATABASE_COLUMN_ID)),
+                            res.getString(res.getColumnIndex(ALARMDATABASE_COLUMN_NAME)),
+                            res.getInt(res.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_HOURS)),
+                            res.getInt(res.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_MINUTES)),
+                            res.getInt(res.getColumnIndex(ALARMDATABASE_COLUMN_VIBRATE)),
+                            res.getInt(res.getColumnIndex(ALARMDATABASE_COLUMN_DAYS))
                     )
             );
             res.moveToNext();

@@ -19,8 +19,10 @@ public class AlarmTrigger {
     private PendingIntent alarmIntent;
 
     // i think i need something like this but iz dunno
-    //public CustomAdapter (final Context context, final int ItemLayout) {super(context, 0); this.ItemLayout = ItemLayout;}
-/* this code is quite messed... help pls
+    private AlarmTrigger() { }
+
+    // this code is quite messed...
+    /*
     public void TimeCreate (int hour, int min, int daysofweek){
         //idk why these context and AlarmReceiver things are red :(
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -45,6 +47,7 @@ public class AlarmTrigger {
 
 
     public int getNextDay(int days) {
+        //hm... uh......
         Calendar calendar = Calendar.getInstance();
         //goes to the day after the current one
         int checkday = calendar.get(Calendar.DAY_OF_WEEK)+1;
@@ -58,8 +61,10 @@ public class AlarmTrigger {
         }
         return checkday;
     }
-*/
+    */
+
     public List<Integer> GetDays (int days) {
+        // this can be deleted eventually...
         final List<Integer> daysofweek = new ArrayList<>();
         if ((days & Days.SUNDAY) != 0) {
             daysofweek.add(1);
