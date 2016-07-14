@@ -209,7 +209,7 @@ public class AddTimeAlarm extends AppCompatActivity {
         {
             int Value = extras.getInt("id");
             if(Value>0){
-                if(mydb.updateContact(id_To_Update,nam.getText().toString(),vib,timePicker.getCurrentHour(),timePicker.getCurrentMinute(),daysofweek)){
+                if(mydb.updateTimeContact(id_To_Update,nam.getText().toString(),vib,timePicker.getCurrentHour(),timePicker.getCurrentMinute(),daysofweek)){
                     Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),AlarmView.class);
                     startActivity(intent);
@@ -219,7 +219,7 @@ public class AddTimeAlarm extends AppCompatActivity {
                 }
             }
             else{
-                if(mydb.insertContact(nam.getText().toString(),vib,timePicker.getCurrentHour(),timePicker.getCurrentMinute(), daysofweek)){
+                if(mydb.insertTimeContact(nam.getText().toString(),vib,timePicker.getCurrentHour(),timePicker.getCurrentMinute(), daysofweek)){
                     Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
                 }
 

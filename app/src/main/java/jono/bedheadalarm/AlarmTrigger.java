@@ -5,6 +5,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingRequest;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -22,7 +25,7 @@ public class AlarmTrigger {
     private AlarmTrigger() { }
 
     // this code is quite messed...
-    /*
+    //https://developer.android.com/training/scheduling/alarms.html
     public void TimeCreate (int hour, int min, int daysofweek){
         //idk why these context and AlarmReceiver things are red :(
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -44,7 +47,32 @@ public class AlarmTrigger {
 
     }
 
+    //https://developer.android.com/training/location/geofencing.html#RequestGeofences
+    //need to specify intent
+    public void GPSCreate (double lat, double lon, int radius, int trigger) {
 
+        mGeofenceList.add(new Geofence.Builder()
+                //UUID here eventually
+                .setRequestId(entry.getKey())
+
+                .setCircularRegion(
+                        lat,
+                        lon,
+                        radius
+                )
+                // forever and ever ?
+                .setExpirationDuration(-1)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                        Geofence.GEOFENCE_TRANSITION_EXIT)
+                .build());
+    }
+
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.addGeofences(mGeofenceList);
+        return builder.build();
+    }
 
     public int getNextDay(int days) {
         //hm... uh......
@@ -61,7 +89,7 @@ public class AlarmTrigger {
         }
         return checkday;
     }
-    */
+
 
     public List<Integer> GetDays (int days) {
         // this can be deleted eventually...

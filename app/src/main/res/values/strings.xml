@@ -35,4 +35,11 @@
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="cTimeAlarm">Create Time Alarm</string>
     <string name="cGPSAlarm">Create GPS Alarm</string>
+    <string name="onleave">Trigger when leaving</string>
+    <string name="onenter">Trigger when entering</string>
+    <string name="vibon">Vibrate Phone</string>
+    <string name="viboff">Vibrate Off</string>
+    <string name="radius">Radius of Boundary</string>
+    <string name="radiusInt">50 metres</string>
+
 </resources>

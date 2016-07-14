@@ -24,6 +24,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ALARMDATABASE_COLUMN_HOURS = "hours";
     public static final String ALARMDATABASE_COLUMN_MINUTES = "minutes";
     public static final String ALARMDATABASE_COLUMN_DAYS = "days";
+    public static final String ALARMDATABASE_COLUMN_RADIUS = "radius";
+    public static final String ALARMDATABASE_COLUMN_TRIGGER = "trigger";
+    public static final String ALARMDATABASE_COLUMN_LAT = "lat";
+    public static final String ALARMDATABASE_COLUMN_LON = "lon";
 
     private HashMap hp;
 
@@ -37,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table alarmdatabase " +
-                        "(id Integer primary key, name text,vib int default 0, hours int, minutes int, days int)"
+                        "(id Integer primary key, name text,vib int default 0, hours int, minutes int, days int, radius int, trigger int default 0, real lat, real lon)"
         );
     }
 
@@ -48,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertContact  (String name, Integer vib, Integer hours, Integer minutes, Integer days)
+    public boolean insertTimeContact  (String name, Integer vib, Integer hours, Integer minutes, Integer days)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -62,6 +66,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean insertGPSContact (String name, Double lat, Double lon, Integer radius, Integer vib, Integer trigger, Integer days)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("lat", lat);
+        contentValues.put("lon", lon);
+        contentValues.put("radius", radius);
+        contentValues.put("trigger", trigger);
+        contentValues.put("vib", vib);
+        contentValues.put("days", days);
+        db.insert("alarmdatabase",null , contentValues);
+        return true;
+    }
 
     public Cursor getData(int id){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -75,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateContact (Integer id, String name, Integer vib, Integer hours, Integer minutes, Integer days)
+    public boolean updateTimeContact (Integer id, String name, Integer vib, Integer hours, Integer minutes, Integer days)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -83,6 +101,21 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("vib", vib);
         contentValues.put("hours", hours);
         contentValues.put("minutes", minutes);
+        contentValues.put("days", days);
+        db.update("alarmdatabase", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
+        return true;
+    }
+
+    public boolean updateGPSContact (Integer id, String name, Double lat, Double lon, Integer radius, Integer vib, Integer trigger, Integer days)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("lat", lat);
+        contentValues.put("lon", lon);
+        contentValues.put("radius", radius);
+        contentValues.put("trigger", trigger);
+        contentValues.put("vib", vib);
         contentValues.put("days", days);
         db.update("alarmdatabase", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
         return true;

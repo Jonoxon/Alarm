@@ -1,6 +1,7 @@
 package jono.bedheadalarm;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,18 +27,27 @@ public class AddGPSAlarm extends AppCompatActivity {
 
     TextView nam;
     Switch vibrate;
+    Switch trigger;
     Integer vib;
+    Integer trg;
     Integer daysofweek;
+    Integer radius;
+    Double lon;
+    Double lat;
+    Button numberpicker;
     int id_To_Update = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_timealarm);
+        setContentView(R.layout.activity_add_gpsalarm);
         nam = (TextView) findViewById(R.id.editTextName);
         vibrate = (Switch) findViewById(R.id.vibrateToggle);
+        trigger = (Switch) findViewById(R.id.triggerToggle);
+        Button numberpicker = (Button) findViewById(R.id.bpickerdisplay);
 
         vibrate.setChecked(false);
+        trigger.setChecked(false);
 
         mydb = new DBHelper(this);
 
@@ -44,7 +55,19 @@ public class AddGPSAlarm extends AppCompatActivity {
         TextView alarmtitle = (TextView) findViewById(R.id.AlarmTitle);
         delete.setVisibility(View.INVISIBLE);
 
+        numberpicker.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                showpicker();
+            }
+        });
+
+
         Bundle extras = getIntent().getExtras();
+        lon = extras.getDouble("lon");
+        lat = extras.getDouble("lat");
+
         if (extras != null) {
             int Value = extras.getInt("id");
 
@@ -59,6 +82,7 @@ public class AddGPSAlarm extends AppCompatActivity {
 
                 String name = rs.getString(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_NAME));
                 Integer oldvib = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_VIBRATE));
+                Integer oldtrg = rs.getInt(rs.getColumnIndex(DBHelper.ALARMDATABASE_COLUMN_TRIGGER));
 
                 if (!rs.isClosed()) {
                     rs.close();
@@ -69,6 +93,9 @@ public class AddGPSAlarm extends AppCompatActivity {
 
                 if (oldvib == 1) {
                     vibrate.setChecked(true);
+                }
+                if (oldtrg == 1) {
+                    trigger.setChecked(true);
                 }
             }
         }
@@ -90,8 +117,45 @@ public class AddGPSAlarm extends AppCompatActivity {
                 }
             }
         });
+
+        trigger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    trigger.setChecked(true);
+                    trg = 1;
+                    Toast.makeText(getApplicationContext(), "Activated", Toast.LENGTH_SHORT).show();
+                } else {
+                    vibrate.setChecked(false);
+                    trg = 0;
+                    Toast.makeText(getApplicationContext(), "Deactivated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
+    public void showpicker() {
+
+        final Dialog d = new Dialog(AddGPSAlarm.this);
+        d.setTitle("NumberPicker");
+        d.setContentView(R.layout.numberpickerdialog);
+        Button b1 = (Button) d.findViewById(R.id.bnumberp);
+        final NumberPicker picker = (NumberPicker) d.findViewById(R.id.numberPicker1);
+        picker.setMaxValue(25);
+        picker.setMinValue(5);
+        picker.setWrapSelectorWheel(false);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                radius = picker.getValue()*10;
+                String lol = Integer.toString(radius)+" metres";
+                Button numberpicker = (Button) findViewById(R.id.bpickerdisplay);
+                numberpicker.setText(lol);
+                d.dismiss();
+            }
+        });
+        d.show();
+    }
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         //replaces the default 'Back' button action
@@ -193,7 +257,7 @@ public class AddGPSAlarm extends AppCompatActivity {
         {
             int Value = extras.getInt("id");
             if(Value>0){
-                if(mydb.updateContact(id_To_Update,nam.getText().toString(),vib,null,null,daysofweek)){
+                if(mydb.updateGPSContact(id_To_Update,nam.getText().toString(),lat, lon, radius, vib, trg, daysofweek)){
                     Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),AlarmView.class);
                     startActivity(intent);
@@ -203,7 +267,7 @@ public class AddGPSAlarm extends AppCompatActivity {
                 }
             }
             else{
-                if(mydb.insertContact(nam.getText().toString(),vib,null,null, daysofweek)){
+                if(mydb.insertGPSContact(nam.getText().toString(),lat, lon, radius, vib, trg, daysofweek)){
                     Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
                 }
 
